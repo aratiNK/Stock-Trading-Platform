@@ -6,7 +6,7 @@ import "./index.css";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// ✅ BOOTSTRAP TOKEN FROM URL (LOCAL ONLY)
+// ✅ READ TOKEN FROM URL (REQUIRED)
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
 
