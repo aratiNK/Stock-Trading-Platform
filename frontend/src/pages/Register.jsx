@@ -10,21 +10,27 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3002/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       alert("Account created! Please login.");
       window.location.href = "/login";
     } catch (err) {
-      alert(err.response?.data?.msg || "Registration failed");
+      alert(err?.response?.data?.msg || "Registration failed");
     }
   };
 
   return (
-    <div className="register-container" style={{ maxWidth: "400px", margin: "50px auto" }}>
+    <div
+      className="register-container"
+      style={{ maxWidth: "400px", margin: "50px auto" }}
+    >
       <h2 className="mb-4 text-center">Create Your Account</h2>
 
       <form onSubmit={submit}>
@@ -56,7 +62,9 @@ export default function Register() {
 
       <p className="text-center mt-3">
         Already have an account?{" "}
-        <a href="/login" className="text-primary">Login here</a>
+        <a href="/login" className="text-primary">
+          Login here
+        </a>
       </p>
     </div>
   );
