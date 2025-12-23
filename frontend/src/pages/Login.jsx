@@ -11,22 +11,25 @@ export default function Login() {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/login`,
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
-      // ✅ Save auth data in localStorage
+      // ✅ save token
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert("Login success! Redirecting to dashboard...");
 
-      // ✅ Redirect to deployed dashboard app
-      window.location.replace(
-        "https://stock-trading-dashboard.netlify.app/"
-      );
+      const isLocal = window.location.hostname === "localhost";
+
+      if (isLocal) {
+        // 🔹 LOCAL: pass token via URL (required)
+        window.location.href = `http://localhost:3001/?token=${res.data.token}`;
+      } else {
+        // 🔹 PRODUCTION: Netlify dashboard
+        window.location.href =
+          "https://stock-trading-dashboard.netlify.app/";
+      }
     } catch (err) {
       alert(err?.response?.data?.msg || "Invalid credentials");
     }
