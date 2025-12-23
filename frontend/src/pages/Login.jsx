@@ -11,18 +11,22 @@ export default function Login() {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/login`,
-        { email, password }
+        {
+          email,
+          password,
+        }
       );
 
-      // ✅ Save auth data
+      // ✅ Save auth data in localStorage
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert("Login success! Redirecting...");
+      alert("Login success! Redirecting to dashboard...");
 
-      // ✅ Redirect to dashboard (external app)
-      window.location.href =
-        "https://stock-trading-dashboard.netlify.app";
+      // ✅ Redirect to deployed dashboard app
+      window.location.replace(
+        "https://stock-trading-dashboard.netlify.app/"
+      );
     } catch (err) {
       alert(err?.response?.data?.msg || "Invalid credentials");
     }
@@ -35,8 +39,8 @@ export default function Login() {
       <form onSubmit={submit}>
         <input
           type="email"
-          placeholder="Enter email"
           className="form-control mb-3"
+          placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -44,8 +48,8 @@ export default function Login() {
 
         <input
           type="password"
-          placeholder="Enter password"
           className="form-control mb-3"
+          placeholder="Enter password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
