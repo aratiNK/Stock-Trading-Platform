@@ -5,3 +5,8 @@ dashboard/node_modules/
 frontend/node_modules/
 *.log
 
+# Dashboard env files
+dashboard/.env
+dashboard/.env.local
+dashboard/.env.production
+
