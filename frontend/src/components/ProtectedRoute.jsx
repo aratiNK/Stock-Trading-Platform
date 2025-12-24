@@ -2,8 +2,12 @@ export default function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    // redirect to frontend login (external app)
-    window.location.href = "http://localhost:5173/login";
+    const loginURL =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3000/login"
+        : "https://stock-trading-arati.netlify.app/login";
+
+    window.location.replace(loginURL);
     return null;
   }
 

@@ -1,8 +1,10 @@
-// dashboard/src/api.js
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL, // backend
+  baseURL:
+    window.location.hostname === "localhost"
+      ? "http://localhost:3002"
+      : process.env.REACT_APP_API_URL,
 });
 
 api.interceptors.request.use((config) => {

@@ -2,8 +2,12 @@ export default function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    window.location.href =
-      "https://stock-trading-clon.netlify.app/login";
+    const loginURL =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3000/login"
+        : "https://stock-trading-clon.netlify.app/login";
+
+    window.location.replace(loginURL);
     return null;
   }
 

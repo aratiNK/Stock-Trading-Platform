@@ -12,60 +12,45 @@ export default function Register() {
     try {
       await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/register`,
-        {
-          name,
-          email,
-          password,
-        }
+        { name, email, password }
       );
 
-      alert("Account created! Please login.");
-      window.location.href = "/login";
+      alert("Account created. Please login.");
+      window.location.replace("/login");
     } catch (err) {
       alert(err?.response?.data?.msg || "Registration failed");
     }
   };
 
   return (
-    <div
-      className="register-container"
-      style={{ maxWidth: "400px", margin: "50px auto" }}
-    >
-      <h2 className="mb-4 text-center">Create Your Account</h2>
+    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
+      <h2 className="text-center mb-4">Register</h2>
 
       <form onSubmit={submit}>
         <input
-          type="text"
-          placeholder="Full Name"
           className="form-control mb-3"
+          placeholder="Name"
           onChange={(e) => setName(e.target.value)}
+          required
         />
 
         <input
-          type="email"
-          placeholder="Enter Email"
           className="form-control mb-3"
+          placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
           type="password"
-          placeholder="Create Password"
           className="form-control mb-3"
+          placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
-        <button type="submit" className="btn btn-success w-100">
-          Sign Up
-        </button>
+        <button className="btn btn-success w-100">Register</button>
       </form>
-
-      <p className="text-center mt-3">
-        Already have an account?{" "}
-        <a href="/login" className="text-primary">
-          Login here
-        </a>
-      </p>
     </div>
   );
 }

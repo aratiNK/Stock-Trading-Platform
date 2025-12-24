@@ -9,52 +9,51 @@ export default function Login() {
     e.preventDefault();
 
     try {
+      const backendURL =
+        window.location.hostname === "localhost"
+          ? "http://localhost:3002"
+          : "https://stock-trading-platform-2-q9qo.onrender.com";
+
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        `${backendURL}/api/auth/login`,
         { email, password }
       );
 
-      // Save token (optional, dashboard will also save it)
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert("Login success! Redirecting to dashboard...");
+      const dashboardURL =
+        window.location.hostname === "localhost"
+          ? "http://localhost:3001"
+          : "https://stock-trading-dashboard.netlify.app";
 
-      // ✅ ALWAYS pass token via URL (local + Netlify)
-      window.location.href =
-        `https://stock-trading-dashboard.netlify.app/?token=${res.data.token}`;
-
+      window.location.href = dashboardURL;
     } catch (err) {
       alert(err?.response?.data?.msg || "Invalid credentials");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h2 className="mb-4 text-center">Login to Trading Platform</h2>
+    <div style={{ maxWidth: 400, margin: "50px auto" }}>
+      <h2 className="text-center">Login</h2>
 
       <form onSubmit={submit}>
         <input
-          type="email"
           className="form-control mb-3"
-          placeholder="Enter email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
 
         <input
           type="password"
           className="form-control mb-3"
-          placeholder="Enter password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
 
-        <button type="submit" className="btn btn-primary w-100">
-          Login
-        </button>
+        <button className="btn btn-primary w-100">Login</button>
       </form>
     </div>
   );

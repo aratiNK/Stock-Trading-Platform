@@ -1,11 +1,12 @@
-// dashboard/src/api.js
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3002", // your backend
+  baseURL:
+    window.location.hostname === "localhost"
+      ? "http://localhost:3002"
+      : "https://stock-trading-platform-2-q9qo.onrender.com",
 });
 
-// Attach token from localStorage to every request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
