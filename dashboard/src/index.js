@@ -10,11 +10,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
 
-if (token) {
+if (token && !localStorage.getItem("token")) {
   localStorage.setItem("token", token);
-  // clean URL so React Router works properly
   window.history.replaceState({}, document.title, window.location.pathname);
 }
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

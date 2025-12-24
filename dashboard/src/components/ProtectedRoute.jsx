@@ -1,14 +1,9 @@
 export default function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
+  // 🚨 STOP all redirects to frontend
   if (!token) {
-    const loginURL =
-      window.location.hostname === "localhost"
-        ? "http://localhost:3000/login"
-        : "https://stock-trading-clon.netlify.app/login";
-
-    window.location.replace(loginURL);
-    return null;
+    return <h2 style={{ textAlign: "center" }}>Please login again</h2>;
   }
 
   return children;
